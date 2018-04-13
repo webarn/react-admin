@@ -6,18 +6,29 @@ import registerServiceWorker from "./registerServiceWorker";
 //page
 import Home from "./page/home/index";
 import Layout from "./components/layout/index";
+import Login from "./page/login/index";
 
 class App extends React.Component {
   render() {
     return (
       <Router>
-        <Layout>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/product" component={Home} />
-            <Route path="/product.category" component={Home} />
-          </Switch>
-        </Layout>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route
+            path="/"
+            render={props => (
+              <Layout>
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/product" component={Home} />
+                  <Route path="/product-category" component={Home} />
+                  <Route path="/order" component={Home} />
+                  <Route path="/user" component={Home} />
+                </Switch>
+              </Layout>
+            )}
+          />
+        </Switch>
       </Router>
     );
   }
