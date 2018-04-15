@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import http from "axios";
 
 import Util from "../../util/mm";
-import User from "../../service/user";
 
 const _mm = new Util();
-const _user = new User();
 
 export default class TopNav extends React.Component {
   constructor() {
@@ -17,8 +16,8 @@ export default class TopNav extends React.Component {
 
   //退出登录
   logout() {
-    _user
-      .logout()
+    http
+      .post("/user/logout.do")
       .then(res => {
         _mm.removeStorage("userInfo");
         window.location.href = "/login";

@@ -1,36 +1,4 @@
-import $ from "jquery";
-
 export default class Util {
-  /**
-   * ajax请求
-   * @param {object} param
-   * @returns {Promise}  Promise
-   */
-  request(param) {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        type: param.type || "GET",
-        url: param.url || "",
-        dataType: param.dataType || "json",
-        data: param.data || null,
-        success(res) {
-          console.log(res.status);
-          if (res.status === 0) {
-            typeof resolve === "function" && resolve(res.data, res.msg);
-          } else if (res.status === 10) {
-            //未登录
-            this.doLogin();
-          } else {
-            //错误
-            typeof reject === "function" && reject(res.msg || res.data);
-          }
-        },
-        error(err) {
-          typeof reject === "function" && reject(err.statusText);
-        }
-      });
-    });
-  }
   //跳转登录
   doLogin() {
     window.location.href = "/login?redirect=" + encodeURIComponent(window.location.pathname);
@@ -45,6 +13,27 @@ export default class Util {
     let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     let result = queryString.match(reg);
     return result ? decodeURIComponent(result[2]) : null;
+  }
+
+  //检查登录数据是否合法
+  checkLogInfo(logInfo) {
+    let username = logInfo.username.trim();
+    let password = logInfo.password.trim();
+    if (typeof username !== "string" || username.length === 0) {
+      return {
+        status: false,
+        msg: "用户名不能为空!"
+      };
+    }
+    if (typeof password !== "string" || password.length === 0) {
+      return {
+        status: false,
+        msg: "密码不能为空!"
+      };
+    }
+    return {
+      status: true
+    };
   }
 
   //错误处理

@@ -9,14 +9,14 @@ export default class SideNav extends React.Component {
           <ul className="nav">
             <li>
               <NavLink exact activeClassName="active-menu" to="/">
-                <i className="fa fa-dashboard" />
+                <i className="fa fa-home" />
                 <span>首 页</span>
               </NavLink>
             </li>
 
             <li className="active">
               <Link to="/product">
-                <i className="fa fa-sitemap" />商 品<span className="fa arrow" />
+                <i className="fa fa-list-ul" />商 品<span className="fa arrow" />
               </Link>
               <ul className="nav nav-second-level collapse in">
                 <li>
@@ -34,7 +34,7 @@ export default class SideNav extends React.Component {
 
             <li className="active">
               <Link to="/order">
-                <i className="fa fa-sitemap" />订 单<span className="fa arrow" />
+                <i className="fa fa-check-square-o" />订 单<span className="fa arrow" />
               </Link>
               <ul className="nav nav-second-level collapse in">
                 <li>
@@ -47,7 +47,7 @@ export default class SideNav extends React.Component {
 
             <li className="active">
               <Link to="/user">
-                <i className="fa fa-sitemap" />用 户<span className="fa arrow" />
+                <i className="fa fa-user-o" />用 户<span className="fa arrow" />
               </Link>
               <ul className="nav nav-second-level collapse in">
                 <li>

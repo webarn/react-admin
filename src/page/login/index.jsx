@@ -2,10 +2,10 @@ import React from "react";
 
 import "./index.scss";
 import Util from "../../util/mm";
-import User from "../../service/user";
+import http from "axios";
+import qs from "qs";
 
 const _mm = new Util();
-const _user = new User();
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -42,16 +42,22 @@ export default class Login extends React.Component {
       username: this.state.username,
       password: this.state.password
     };
-    let checkData = _user.checkLogInfo(data);
+    let checkData = _mm.checkLogInfo(data);
     if (checkData.status) {
-      _user
-        .login(data)
+      http
+        .post("/manage/user/login.do", qs.stringify(data))
         .then(res => {
-          _mm.setStorage("userInfo", res);
-          this.props.history.push(this.state.redirect);
+          if (res.data.status === 0) {
+            _mm.setStorage("userInfo", res.data.data);
+            this.props.history.push(this.state.redirect);
+          } else if (res.data.status === 10) {
+            _mm.doLogin();
+          } else {
+            _mm.errTips(res.data.msg);
+          }
         })
         .catch(errMsg => {
-          _mm.errTips(errMsg);
+          _mm.errTips("登录错误");
         });
     } else {
       _mm.errTips(checkData.msg);

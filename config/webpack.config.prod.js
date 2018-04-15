@@ -101,10 +101,7 @@ module.exports = {
     ]
   },
   externals: {
-    // require("zepto") is external and available
-    //  on the global var Zepto
-    $: "jQuery",
-    jquery: "jQuery"
+    http: "axios"
   },
   module: {
     strictExportPresence: true,
