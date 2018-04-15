@@ -83,6 +83,10 @@ module.exports = function(proxy, allowedHost) {
       "/manage": {
         target: "http://admintest.happymmall.com",
         changeOrigin: true
+      },
+      "/user/logout.do": {
+        target: "http://admintest.happymmall.com",
+        changeOrigin: true
       }
     },
     before(app) {
