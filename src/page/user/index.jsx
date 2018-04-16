@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import http from "axios";
 import Pagination from "../../util/pagination";
 import Util from "../../util/mm";
 import PageTitle from "../../components/page-title/index";
+import TableList from "../../util/tableList";
 
 const _mm = new Util();
 
@@ -13,7 +13,6 @@ class User extends Component {
     this.state = {
       list: [],
       pageNum: 1,
-      fristLoding: true
     };
   }
 
@@ -28,18 +27,13 @@ class User extends Component {
         if (res.data.status === 10) {
           _mm.doLogin();
         } else if (res.data.status === 0) {
-          this.setState(res.data.data, () => {
-            this.setState({
-              fristLoding: false
-            });
-          });
+          this.setState(res.data.data);
         }
       })
       .catch(err => {
         this.setState({
           list: [],
-          fristLoding:false
-        })
+        });
         _mm.errTips("获取用户列表失败!");
       });
   }
@@ -56,45 +50,29 @@ class User extends Component {
   }
 
   render() {
-    let ListBody = this.state.list.map((user, index) => {
-      return (
-        <tr key={index}>
-          <td>{user.id}</td>
-          <td>{user.username}</td>
-          <td>{user.email}</td>
-          <td>{user.phone}</td>
-          <td>{new Date(user.createTime).toLocaleString()}</td>
-        </tr>
-      );
-    });
-    let ListError = (
-      <tr>
-        <td colSpan="5" className="text-center">
-          {this.state.fristLoding ? "正在加载内容..." : "没有找到相应的结果~"}
-        </td>
-      </tr>
-    );
-    let tableBody = this.state.list.length ? ListBody : ListError;
-
+    let tableHeads = [
+      { name: "ID", width: "10%" },
+      { name: "用户名" },
+      { name: "邮 箱" },
+      { name: "电 话" },
+      { name: "注册时间" }
+    ];
     return (
       <div id="page-wrapper">
         <PageTitle title="用户列表" />
-        <div className="row">
-          <div className="col-md-12">
-            <table className="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>用户名</th>
-                  <th>邮 箱</th>
-                  <th>电 话</th>
-                  <th>注册时间</th>
-                </tr>
-              </thead>
-              <tbody>{tableBody}</tbody>
-            </table>
-          </div>
-        </div>
+        <TableList headers={tableHeads}>
+          {this.state.list.map((user, index) => {
+            return (
+              <tr key={index}>
+                <td>{user.id}</td>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>{new Date(user.createTime).toLocaleString()}</td>
+              </tr>
+            );
+          })}
+        </TableList>
         <Pagination
           current={this.state.pageNum}
           total={this.state.total}

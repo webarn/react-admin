@@ -41,6 +41,11 @@ export default class Util {
     alert(errMsg || "有错误!");
   }
 
+  //成功处理
+  successTips(successMsg) {
+    alert(successMsg || "操作成功~");
+  }
+
   //本地存储
   setStorage(key, val) {
     let valType = typeof val;

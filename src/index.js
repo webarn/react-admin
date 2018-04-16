@@ -7,6 +7,7 @@ import registerServiceWorker from "./registerServiceWorker";
 import Home from "./page/home/index";
 import Layout from "./components/layout/index";
 import Login from "./page/login/index";
+import Product from "./page/product/router";
 import PageErr from "./page/error/index";
 import User from "./page/user/index";
 
@@ -16,11 +17,12 @@ class App extends React.Component {
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/product" component={Home} />
-          <Route path="/product-category" component={Home} />
+          <Route path="/product" component={Product} />
+          <Route path="/product-category" component={Product} />
           <Route path="/order" component={Home} />
           <Route path="/user/index" component={User} />
           <Redirect exact from="/user" to="/user/index" />
+
           <Route component={PageErr} />
         </Switch>
       </Layout>
